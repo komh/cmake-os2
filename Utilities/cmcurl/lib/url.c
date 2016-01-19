@@ -5940,9 +5940,7 @@ CURLcode Curl_setup_conn(struct connectdata *conn,
    * a file).
    */
 
-  if((data->set.out)->_handle == NULL) {
     _fsetmode(stdout, "b");
-  }
 #endif
 
   return result;

@@ -92,6 +92,13 @@ else
   cmake_system_mingw=false
 fi
 
+# Determine whether this is a OS/2 environment.
+if echo "${cmake_system}" | grep OS/2 >/dev/null 2>&1; then
+  cmake_system_os2=true
+else
+  cmake_system_os2=false
+fi
+
 # Determine whether this is OS X
 if echo "${cmake_system}" | grep Darwin >/dev/null 2>&1; then
   cmake_system_darwin=true
@@ -543,7 +550,7 @@ cmake_tmp_file ()
 cmake_try_run ()
 {
   COMPILER=$1
-  FLAGS=$2
+  FLAGS=$2 
   TESTFILE=$3
   if [ ! -f "${TESTFILE}" ]; then
     echo "Test file ${TESTFILE} missing. Please verify your CMake source tree."
@@ -555,7 +562,7 @@ cmake_try_run ()
   echo "----------  file   -----------------------"
   cat "${TESTFILE}"
   echo "------------------------------------------"
-  "${COMPILER}" ${FLAGS} "${TESTFILE}" -o "${TMPFILE}"
+  "${COMPILER}" ${cmake_ld_flags} ${FLAGS} "${TESTFILE}" -o "${TMPFILE}"
   RES=$?
   if [ "${RES}" -ne "0" ]; then
     echo "Test failed to compile"
@@ -727,6 +734,11 @@ cmake_ld_flags=${LDFLAGS}
 # Add Cygwin-specific flags
 if ${cmake_system_cygwin}; then
   cmake_ld_flags="${LDFLAGS} -Wl,--enable-auto-import"
+fi
+
+# Add OS/2 flags
+if ${cmake_system_os2}; then
+  cmake_ld_flags="${LDFLAGS} -Zexe"
 fi
 
 # Add CoreFoundation framework on Darwin
@@ -936,7 +948,7 @@ if [ -n "${MAKE}" ]; then
 else
   cmake_make_processors="${CMAKE_KNOWN_MAKE_PROCESSORS}"
 fi
-
+cmake_make_processor="make.exe"
 TMPFILE="`cmake_tmp_file`_dir"
 rm -rf "${cmake_bootstrap_dir}/${TMPFILE}"
 mkdir "${cmake_bootstrap_dir}/${TMPFILE}"

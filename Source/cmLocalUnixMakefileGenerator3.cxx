@@ -723,7 +723,7 @@ cmLocalUnixMakefileGenerator3
     }
   else
     {
-#if !defined(__VMS)
+#if !defined(__VMS) && !defined(__OS2__)
       makefileStream
         << "# The shell in which to execute make rules.\n"
         << "SHELL = /bin/sh\n"

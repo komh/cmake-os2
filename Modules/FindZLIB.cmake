@@ -74,7 +74,7 @@ set(_ZLIB_SEARCH_NORMAL
   )
 list(APPEND _ZLIB_SEARCHES _ZLIB_SEARCH_NORMAL)
 
-set(ZLIB_NAMES z zlib zdll zlib1)
+set(ZLIB_NAMES z zlib zdll zlib1 libz)
 set(ZLIB_NAMES_DEBUG zlibd zlibd1)
 
 # Try each search configuration.

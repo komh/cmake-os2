@@ -172,6 +172,11 @@ foreach(_CURRENT_VERSION ${_Python_VERSIONS})
     PATH_SUFFIXES python${_CURRENT_VERSION}/config
   )
 
+IF(OS2)
+  FIND_LIBRARY(PYTHON_LIBRARY
+    NAMES python${_CURRENT_VERSION_NO_DOTS} python${_CURRENT_VERSION})
+ENDIF(OS2)
+
   # Don't search for include dir until library location is known
   if(PYTHON_LIBRARY)
 

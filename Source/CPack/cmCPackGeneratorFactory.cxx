@@ -36,7 +36,7 @@
 #endif
 
 #if !defined(_WIN32) \
- && !defined(__QNXNTO__) && !defined(__BEOS__) && !defined(__HAIKU__)
+ && !defined(__QNXNTO__) && !defined(__BEOS__) && !defined(__HAIKU__) && !defined(__EMX__)
 #  include "cmCPackDebGenerator.h"
 #  include "cmCPackRPMGenerator.h"
 #endif
@@ -142,7 +142,7 @@ cmCPackGeneratorFactory::cmCPackGeneratorFactory()
     }
 #endif
 #if !defined(_WIN32) \
-  && !defined(__QNXNTO__) && !defined(__BEOS__) && !defined(__HAIKU__)
+  && !defined(__QNXNTO__) && !defined(__BEOS__) && !defined(__HAIKU__) && !defined(__EMX__)
   if (cmCPackDebGenerator::CanGenerate())
     {
     this->RegisterGenerator("DEB", "Debian packages",

@@ -19,6 +19,9 @@
 # include "Process.h.in"
 # include "System.h.in"
 #endif
+#ifdef __EMX__
+#include <sys/socket.h>
+#endif
 
 /*
 
@@ -74,6 +77,10 @@ do.
 # define KWSYSPE_VMS_NONBLOCK , O_NONBLOCK
 #else
 # define KWSYSPE_VMS_NONBLOCK
+#endif
+
+#ifdef __EMX__
+#include <process.h>
 #endif
 
 #if defined(KWSYS_C_HAS_PTRDIFF_T) && KWSYS_C_HAS_PTRDIFF_T
@@ -851,7 +858,11 @@ void kwsysProcess_Execute(kwsysProcess* cp)
   {
   /* Create the pipe.  */
   int p[2];
+#ifndef __EMX__
   if(pipe(p KWSYSPE_VMS_NONBLOCK) < 0)
+#else
+  if (socketpair(AF_UNIX, SOCK_STREAM,0, p KWSYSPE_VMS_NONBLOCK) < 0)
+#endif
     {
     kwsysProcessCleanup(cp, 1);
     return;
@@ -911,7 +922,11 @@ void kwsysProcess_Execute(kwsysProcess* cp)
   {
   /* Create the pipe.  */
   int p[2];
+#ifndef __OS2__
   if(pipe(p KWSYSPE_VMS_NONBLOCK) < 0)
+#else
+  if (socketpair(AF_UNIX, SOCK_STREAM,0, p KWSYSPE_VMS_NONBLOCK) < 0)
+#endif
     {
     kwsysProcessCleanup(cp, 1);
     return;
@@ -987,7 +1002,11 @@ void kwsysProcess_Execute(kwsysProcess* cp)
       {
       /* Create a pipe to sit between the children.  */
       int p[2] = {-1,-1};
+#ifndef __OS2__
       if(pipe(p KWSYSPE_VMS_NONBLOCK) < 0)
+#else
+  if (socketpair(AF_UNIX, SOCK_STREAM,0, p KWSYSPE_VMS_NONBLOCK) < 0)
+#endif
         {
         if (nextStdIn != cp->PipeChildStd[0])
           {
@@ -1176,6 +1195,7 @@ int kwsysProcess_WaitForData(kwsysProcess* cp, char** data, int* length,
       cp->TimeoutExpired = 1;
       return kwsysProcess_Pipe_None;
       }
+
     }
   else
     {
@@ -1300,6 +1320,7 @@ static int kwsysProcessWaitForPipe(kwsysProcess* cp, char** data, int* length,
     return 1;
     }
 
+#ifndef __EMX__x
   /* Run select to block until data are available.  Repeat call
      until it is not interrupted.  */
   while(((numReady = select(max+1, &cp->PipeSet, 0, 0, timeout)) < 0) &&
@@ -1323,7 +1344,7 @@ static int kwsysProcessWaitForPipe(kwsysProcess* cp, char** data, int* length,
     cp->Killed = 0;
     cp->SelectError = 1;
     }
-
+#endif
   return 0;
 #else
   /* Poll pipes for data since we do not have select.  */
@@ -1837,7 +1858,11 @@ static int kwsysProcessCreate(kwsysProcess* cp, int prIndex,
   ssize_t readRes;
 
   /* Create the error reporting pipe.  */
+#ifndef __OS2__
   if(pipe(si->ErrorPipe) < 0)
+#else
+  if (socketpair(AF_UNIX, SOCK_STREAM,0, si->ErrorPipe) < 0)
+#endif
     {
     return 0;
     }
@@ -2781,7 +2806,11 @@ static int kwsysProcessesAdd(kwsysProcess* cp)
   {
   /* Create the pipe.  */
   int p[2];
+#ifndef __EMX__
   if(pipe(p KWSYSPE_VMS_NONBLOCK) < 0)
+#else
+  if (socketpair(AF_UNIX, SOCK_STREAM,0, p KWSYSPE_VMS_NONBLOCK) < 0)
+#endif
     {
     return 0;
     }

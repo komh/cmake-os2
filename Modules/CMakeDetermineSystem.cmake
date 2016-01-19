@@ -29,6 +29,7 @@
 # NetBSD                        NetBSD
 # OpenBSD                       OpenBSD
 # OFS/1 (Digital Unix)          OSF1
+# OS/2				OS/2
 # SCO OpenServer 5              SCO_SV
 # SCO UnixWare 7                UnixWare
 # SCO UnixWare (pre release 7)  UNIX_SV
@@ -83,6 +84,9 @@ else()
     else()
       set (CMAKE_HOST_SYSTEM_PROCESSOR "$ENV{PROCESSOR_ARCHITECTURE}")
     endif()
+  endif()
+  if(CMAKE_HOST_OS2)
+    set (CMAKE_HOST_SYSTEM_NAME "OS2")
   endif()
 endif()
 

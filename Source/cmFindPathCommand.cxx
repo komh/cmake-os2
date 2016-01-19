@@ -15,7 +15,11 @@
 
 cmFindPathCommand::cmFindPathCommand()
 {
+#ifndef __EMX__
   this->EnvironmentPath = "INCLUDE";
+#else
+  this->EnvironmentPath = "C_INCLUDE_PATH";
+#endif
   this->IncludeFileInPath = false;
 }
 

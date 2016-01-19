@@ -35,7 +35,7 @@
 
 // only build kdevelop generator on non-windows platforms
 // when not bootstrapping cmake
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__EMX__)
 # if defined(CMAKE_BUILD_WITH_CMAKE)
 #   define CMAKE_USE_KDEVELOP
 # endif

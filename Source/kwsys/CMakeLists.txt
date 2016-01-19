@@ -342,7 +342,7 @@ ENDIF()
 # capabilities and parent project's request.  Enforce 0/1 as only
 # possible values for configuration into Configure.hxx.
 
-IF(UNIX)
+IF(UNIX OR OS2)
   KWSYS_PLATFORM_CXX_TEST(KWSYS_STAT_HAS_ST_MTIM
     "Checking whether struct stat has st_mtim member" DIRECT)
 ENDIF()
@@ -769,7 +769,7 @@ SET(KWSYS_CXX_SRCS)
 
 # Add the proper sources for this platform's Process implementation.
 IF(KWSYS_USE_Process)
-  IF(NOT UNIX)
+  IF(NOT UNIX AND NOT OS2)
     # Use the Windows implementation.
     SET(KWSYS_C_SRCS ${KWSYS_C_SRCS} ProcessWin32.c)
   ELSE()

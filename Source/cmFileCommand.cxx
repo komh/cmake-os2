@@ -1228,7 +1228,7 @@ protected:
   MatchProperties CollectMatchProperties(const char* file)
     {
     // Match rules are case-insensitive on some platforms.
-#if defined(_WIN32) || defined(__APPLE__) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(__CYGWIN__) || defined(__EMX__)
     std::string lower = cmSystemTools::LowerCase(file);
     const char* file_to_match = lower.c_str();
 #else
@@ -2722,7 +2722,7 @@ bool cmFileCommand::HandleCMakePathCommand(std::vector<std::string>
     return false;
     }
   i++; // Get rid of subcommand
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if (defined(__EMX__) || defined(_WIN32)) && !defined(__CYGWIN__)
   char pathSep = ';';
 #else
   char pathSep = ':';

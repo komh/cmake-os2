@@ -68,7 +68,9 @@
 
 /* Get a real definition for __FBSDID or __RCSID if we can */
 #if HAVE_SYS_CDEFS_H
+#ifndef __KLIBC__
 #include <sys/cdefs.h>
+#endif
 #endif
 
 /* If not, define them so as to avoid dangling semicolons. */

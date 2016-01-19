@@ -147,7 +147,7 @@ bool cmFileTimeComparison::FileTimesDiffer(const char* f1, const char* f2)
 int cmFileTimeComparisonInternal::Compare(cmFileTimeComparison_Type* s1,
                                           cmFileTimeComparison_Type* s2)
 {
-#if !defined(_WIN32) || defined(__CYGWIN__)
+#if !defined(_WIN32) || defined(__CYGWIN__) 
 # if cmsys_STAT_HAS_ST_MTIM
   // Compare using nanosecond resolution.
   if(s1->st_mtim.tv_sec < s2->st_mtim.tv_sec)

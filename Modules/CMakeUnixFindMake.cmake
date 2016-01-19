@@ -12,7 +12,7 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
-find_program(CMAKE_MAKE_PROGRAM NAMES gmake make smake)
+find_program(CMAKE_MAKE_PROGRAM NAMES gmake make smake make.exe)
 mark_as_advanced(CMAKE_MAKE_PROGRAM)
 
 # Look for a make tool provided by Xcode

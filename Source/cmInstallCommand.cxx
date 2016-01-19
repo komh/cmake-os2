@@ -364,6 +364,7 @@ bool cmInstallCommand::HandleTargetsMode(std::vector<std::string> const& args)
   // Check whether this is a DLL platform.
   bool dll_platform = (this->Makefile->IsOn("WIN32") ||
                        this->Makefile->IsOn("CYGWIN") ||
+                       this->Makefile->IsOn("OS2") ||
                        this->Makefile->IsOn("MINGW"));
 
   for(std::vector<std::string>::const_iterator
@@ -1181,7 +1182,7 @@ cmInstallCommand::HandleDirectoryMode(std::vector<std::string> const& args)
       {
       literal_args += " REGEX \"";
     // Match rules are case-insensitive on some platforms.
-#if defined(_WIN32) || defined(__APPLE__) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(__CYGWIN__) || defined(__EMX__)
       std::string regex = cmSystemTools::LowerCase(args[i]);
 #else
       std::string regex = args[i];
