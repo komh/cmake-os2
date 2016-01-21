@@ -183,7 +183,8 @@ void cmTarget::SetMakefile(cmMakefile* mf)
   // Check whether this is a DLL platform.
   this->DLLPlatform = (this->Makefile->IsOn("WIN32") ||
                        this->Makefile->IsOn("CYGWIN") ||
-                       this->Makefile->IsOn("MINGW"));
+                       this->Makefile->IsOn("MINGW") ||
+                       this->Makefile->IsOn("OS2"));
 
   // Check whether we are targeting an Android platform.
   this->IsAndroid =
@@ -2802,8 +2803,13 @@ const char* cmTarget::GetOutputTargetType(bool implib) const
           }
         else
           {
+#ifndef __OS2__
           // A DLL shared library is treated as a runtime target.
           return "RUNTIME";
+#else
+          // A DLL shared library on OS/2 is treated as a library target.
+          return "LIBRARY";
+#endif
           }
         }
       else

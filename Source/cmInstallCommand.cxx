@@ -471,6 +471,7 @@ bool cmInstallCommand::HandleTargetsMode(std::vector<std::string> const& args)
             archiveGenerator = CreateInstallTargetGenerator(target,
                                                             archiveArgs, true);
             }
+#ifndef __OS2__
           if(!runtimeArgs.GetDestination().empty())
             {
             // The DLL uses the RUNTIME properties.
@@ -482,6 +483,19 @@ bool cmInstallCommand::HandleTargetsMode(std::vector<std::string> const& args)
             this->SetError("Library TARGETS given no DESTINATION!");
             return false;
             }
+#else
+          if (!libraryArgs.GetDestination().empty())
+            {
+            // On OS/2, The DLL uses the LIBRARY properties.
+            libraryGenerator = CreateInstallTargetGenerator(target,
+                                                           libraryArgs, false);
+            }
+          if ((archiveGenerator==0) && (libraryGenerator==0))
+            {
+            this->SetError("Library TARGETS given no DESTINATION!");
+            return false;
+            }
+#endif
           }
         else
           {
