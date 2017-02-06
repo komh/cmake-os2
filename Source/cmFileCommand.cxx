@@ -316,7 +316,7 @@ bool cmFileCommand::HandleReadCommand(std::vector<std::string> const& args)
   std::string variable = resultArg.GetString();
 
   // Open the specified file.
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(__CYGWIN__) || defined(__OS2__)
   cmsys::ifstream file(fileName.c_str(), std::ios::in |
                (hexOutputArg.IsEnabled() ? std::ios::binary : std::ios::in));
 #else
@@ -655,7 +655,7 @@ bool cmFileCommand::HandleStringsCommand(std::vector<std::string> const& args)
     }
 
   // Open the specified file.
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(__CYGWIN__) || defined(__OS2__)
   cmsys::ifstream fin(fileName.c_str(), std::ios::in | std::ios::binary);
 #else
   cmsys::ifstream fin(fileName.c_str(), std::ios::in);

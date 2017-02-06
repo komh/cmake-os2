@@ -2322,7 +2322,7 @@ static bool cmakeCheckStampFile(const char* stampName)
   // solution.
   std::string stampDepends = stampName;
   stampDepends += ".depend";
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(__CYGWIN__) || defined(__OS2__)
   cmsys::ifstream fin(stampDepends.c_str(), std::ios::in | std::ios::binary);
 #else
   cmsys::ifstream fin(stampDepends.c_str(), std::ios::in);

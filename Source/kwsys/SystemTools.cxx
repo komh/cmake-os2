@@ -2303,7 +2303,7 @@ bool SystemTools::FilesDiffer(const std::string& source,
   off_t nleft = statSource.st_size;
 #endif
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__OS2__)
   kwsys::ifstream finSource(source.c_str(),
                             (std::ios::binary |
                              std::ios::in));

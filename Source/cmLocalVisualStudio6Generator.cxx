@@ -338,7 +338,7 @@ void cmLocalVisualStudio6Generator::WriteDSPFile(std::ostream& fout,
         // Make sure the path exists for the file
         std::string path = cmSystemTools::GetFilenamePath(source);
         cmSystemTools::MakeDirectory(path.c_str());
-#if defined(_WIN32) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(__CYGWIN__) || defined(__OS2__)
         cmsys::ofstream sourceFout(source.c_str(),
                            std::ios::binary | std::ios::out
                            | std::ios::trunc);

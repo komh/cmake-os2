@@ -1973,7 +1973,7 @@ void cmCTestTestHandler::GenerateRegressionImages(
         else
           {
           cmsys::ifstream ifs(filename.c_str(), std::ios::in
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
                             | std::ios::binary
 #endif
             );

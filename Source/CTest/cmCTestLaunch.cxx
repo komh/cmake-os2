@@ -21,10 +21,15 @@
 #include <cmsys/RegularExpression.hxx>
 #include <cmsys/FStream.hxx>
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
 #include <io.h> // for _setmode
 #include <fcntl.h> // for _O_BINARY
 #include <stdio.h> // for std{out,err} and fileno
+
+#ifdef __OS2__
+#define _O_BINARY O_BINARY
+#define _setmode setmode
+#endif
 #endif
 
 //----------------------------------------------------------------------------
