@@ -484,7 +484,7 @@ bool SystemTools::GetEnv(const std::string& key, std::string& result)
 
 //----------------------------------------------------------------------------
 
-#if defined(__CYGWIN__) || defined(__GLIBC__)
+#if defined(__CYGWIN__) || defined(__GLIBC__) || defined(__EMX__)
 # define KWSYS_PUTENV_NAME  /* putenv("A")  removes A.  */
 #elif defined(_WIN32)
 # define KWSYS_PUTENV_EMPTY /* putenv("A=") removes A. */
