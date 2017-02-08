@@ -1273,7 +1273,7 @@ bool SystemTools::TestFileAccess(const std::string& filename,
     {
     return false;
     }
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if (defined(_WIN32) && !defined(__CYGWIN__)) || defined(__OS2__)
   // If execute set, change to read permission (all files on Windows
   // are executable if they are readable).  The CRT will always fail
   // if you pass an execute bit.
@@ -1282,9 +1282,13 @@ bool SystemTools::TestFileAccess(const std::string& filename,
     permissions &= ~TEST_FILE_EXECUTE;
     permissions |= TEST_FILE_READ;
     }
+#ifndef __OS2__
   return _waccess(
     SystemTools::ConvertToWindowsExtendedPath(filename).c_str(),
     permissions) == 0;
+#else
+  return access(filename.c_str(), permissions) == 0;
+#endif
 #else
   return access(filename.c_str(), permissions) == 0;
 #endif
@@ -1992,7 +1996,7 @@ void SystemTools::ConvertToUnixSlashes(std::string& path)
     // Also, reuse the loop to check for slash followed by another slash
     if (*pos1 == '/' && *(pos1+1) == '/' && !hasDoubleSlash)
       {
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
       // However, on windows if the first characters are both slashes,
       // then keep them that way, so that network paths can be handled.
       if ( pos > 0)
@@ -3264,7 +3268,7 @@ bool SystemTools::FileIsSymlink(const std::string& name)
 #endif
 }
 
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if (defined(_WIN32) && !defined(__CYGWIN__)) || defined(__OS2__)
 bool SystemTools::CreateSymlink(const std::string&, const std::string&)
 {
   return false;
@@ -4047,7 +4051,7 @@ SystemTools
 //----------------------------------------------------------------------------
 bool SystemTools::ComparePath(const std::string& c1, const std::string& c2)
 {
-#if defined(_WIN32) || defined(__APPLE__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(__OS2__)
 # ifdef _MSC_VER
   return _stricmp(c1.c_str(), c2.c_str()) == 0;
 # elif defined(__APPLE__) || defined(__GNUC__)
@@ -4404,7 +4408,7 @@ bool SystemTools::LocateFileInDir(const char *filename,
         {
         filename_dir = SystemTools::GetFilenamePath(filename_dir);
         filename_dir_base = SystemTools::GetFilenameName(filename_dir);
-#if defined( _WIN32 )
+#if defined( _WIN32 ) || defined(__OS2__)
         if (filename_dir_base.empty() ||
             *filename_dir_base.rbegin() == ':')
 #else
@@ -4466,7 +4470,7 @@ bool SystemTools::FileIsFullPath(const char* in_name, size_t len)
     return false;
     }
 #endif
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__OS2__)
   if(in_name[0] == '~')
     {
     return true;

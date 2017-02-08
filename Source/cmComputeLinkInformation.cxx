@@ -1007,7 +1007,7 @@ cmComputeLinkInformation
 
     // Store this extension choice with the "." escaped.
     libext += "\\";
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if (defined(_WIN32) && !defined(__CYGWIN__)) || defined(__OS2__)
     libext += this->NoCaseExpression(i->c_str());
 #else
     libext += *i;

@@ -811,7 +811,7 @@ static std::string StringVectorToString(const std::vector<std::string>& vec)
 static bool CheckGetPath()
 {
   const char* envName = "S";
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
   const char* envValue = "C:\\Somewhere\\something;D:\\Temp";
 #else
   const char* envValue = "/Somewhere/something:/tmp";
@@ -823,7 +823,7 @@ static bool CheckGetPath()
 
   std::vector<std::string> expectedPathes;
   expectedPathes.push_back(registryPath);
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
   expectedPathes.push_back("C:/Somewhere/something");
   expectedPathes.push_back("D:/Temp");
 #else

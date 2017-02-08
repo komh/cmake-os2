@@ -777,7 +777,7 @@ void cmCTestCoverageHandler::PopulateCustomVectors(cmMakefile *mf)
 //
 // Compare file names: fnc(fn1) == fnc(fn2) // fnc == file name compare
 //
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
 #define fnc(s) cmSystemTools::LowerCase(s)
 #else
 #define fnc(s) s

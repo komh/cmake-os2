@@ -243,7 +243,7 @@ void cmFindLibraryHelper::RegexFromLiteral(std::string& out,
       {
       out += "\\";
       }
-#if defined(_WIN32) || defined(__APPLE__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(__OS2__)
     out += tolower(ch);
 #else
     out += ch;
@@ -379,7 +379,7 @@ bool cmFindLibraryHelper::CheckDirectoryForName(std::string const& path,
       fi != files.end(); ++fi)
     {
     std::string const& origName = *fi;
-#if defined(_WIN32) || defined(__APPLE__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(__OS2__)
     std::string testName = cmSystemTools::LowerCase(origName);
 #else
     std::string const& testName = origName;

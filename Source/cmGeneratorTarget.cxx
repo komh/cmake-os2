@@ -2834,7 +2834,7 @@ void cmGeneratorTarget::GetExecutableNames(std::string& name,
 
   // This versioning is supported only for executables and then only
   // when the platform supports symbolic links.
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if (defined(_WIN32) && !defined(__CYGWIN__)) || defined(__OS2__)
   const char* version = 0;
 #else
   // Check for executable version properties.
