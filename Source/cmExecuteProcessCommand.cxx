@@ -53,7 +53,6 @@ bool cmExecuteProcessCommand
   std::string working_directory;
   for(size_t i=0; i < args.size(); ++i)
     {
-printf( " given argument \"%s\".\n", args[i].c_str());
     if(args[i] == "COMMAND")
       {
       doing_command = true;
